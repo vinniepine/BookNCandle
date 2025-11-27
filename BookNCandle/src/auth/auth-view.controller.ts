@@ -12,7 +12,13 @@ export class AuthViewController {
     const [error] = req.flash ? req.flash('error') : [undefined];
     return res.render('auth/login', { error });
   }
-
+  @Get('logout')
+  logout(@Req() req: any, @Res() res: Response) {
+    req.session.destroy(() => {
+      res.redirect('/login');
+    }); 
+  }
+  
   @Post('login')
   async postLogin(@Req() req: any, @Res() res: Response) {
     const { email, password } = req.body;
@@ -27,7 +33,7 @@ export class AuthViewController {
       req.session.token = result.accessToken;
 
       return res.redirect('/users');
-    } catch (e) {
+    } catch {
       req.flash('error', 'E-mail ou senha inválidos');
       return res.redirect('/login');
     }

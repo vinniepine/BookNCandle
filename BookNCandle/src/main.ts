@@ -15,8 +15,9 @@ async function bootstrap() {
 
   const hbs = exphbs.create({
     extname: '.hbs',
-    layoutsDir: join(__dirname, '..', 'views/_layouts'),
-    partialsDir: join(__dirname, '..', 'views/_partials'),
+    // 👇 AQUI: tudo aponta para src/views
+    layoutsDir: join(__dirname, 'views/_layouts'),
+    partialsDir: join(__dirname, 'views/_partials'),
     defaultLayout: 'main',
     helpers,
   });
@@ -29,7 +30,10 @@ async function bootstrap() {
     }),
   );
 
+  // pasta public continua fora de src
   app.useStaticAssets(join(__dirname, '..', 'public'));
+
+  // 👇 base das views: src/views
   app.setBaseViewsDir(join(__dirname, 'views'));
   app.engine('.hbs', hbs.engine);
   app.setViewEngine('hbs');
