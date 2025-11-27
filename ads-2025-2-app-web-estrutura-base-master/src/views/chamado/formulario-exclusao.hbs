@@ -1,0 +1,27 @@
+<h2>Exclusão de chamado</h2>
+
+{{#if error}}
+    <div class="alert alert-danger">
+        {{#each error}}
+            <p class="p-0 m-0">{{this.message}}</p>
+        {{/each}}
+    </div>
+{{/if}}
+
+<form method="post" action="/chamado/{{chamado.id}}/exclusao?_method=delete">
+    <div class="row mt-4">
+        <div class="col">
+            <p>
+                Deseja realmente excluir o chamado <b>{{chamado.titulo}}</b>?
+            </p>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <button type="submit" class="btn btn-danger">Sim, confirmo exclusão</button>
+            <a href="/chamado" class="btn btn-sm btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<h2>Novo Chamado</h2>
+
+{{#if error}}
+    <div class="alert alert-danger">
+        {{#each error}}
+            <p class="p-0 m-0">{{this.message}}</p>
+        {{/each}}
+    </div>
+{{/if}}
+
+<form method="post" action="/chamado/novo/salvar">
+    <div class="row">
+        <div class="col-8">
+            <label for="">Título</label>
+            <input type="text" name="titulo" class="form-control" value="{{old.titulo}}">
+        </div>
+
+        <div class="col-4">
+            <label for="">Prioridade</label>
+            <select name="prioridade" class="form-select">
+                {{#each prioridades }}
+                  <option {{selected-option this.id '' old.prioridade}} value="{{this.id}}">{{this.nome}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <label for="">Descrição</label>
+            <textarea name="descricao" rows="5" class="form-control">{{old.descricao}}</textarea>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+</form>
