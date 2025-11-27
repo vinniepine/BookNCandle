@@ -8,10 +8,10 @@ export const databaseProviders = [
       const dataSource = new DataSource({
         type: 'mysql',
         host: 'localhost',
-        port: 3360,
+        port: 3306,
         username: 'root',
         password: 'root',
-        database: 'ads_web_bd',
+        database: 'book_n_candle',
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
         logging: false,

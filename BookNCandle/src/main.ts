@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as flash from 'express-flash';
@@ -14,12 +14,20 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const hbs = exphbs.create({
-    extname: '.hbs', // Extensão dos arquivos
-    layoutsDir: join(__dirname, 'views/_layouts'), // Pasta de layouts
-    partialsDir: join(__dirname, 'views/_partials'), // Pasta de partials
-    defaultLayout: 'main', // Layout padrão
+    extname: '.hbs',
+    layoutsDir: join(__dirname, '..', 'views/_layouts'),
+    partialsDir: join(__dirname, '..', 'views/_partials'),
+    defaultLayout: 'main',
     helpers,
   });
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, 'views'));
@@ -38,10 +46,6 @@ async function bootstrap() {
 
   app.useGlobalFilters(new NotFoundExceptionFilter());
 
-  const port = process.env.PORT || 3333;
-
-  await app.listen(port, () =>
-    Logger.log(`Server running on port ${port}`, 'Bootstrap'),
-  );
+  await app.listen(3000);
 }
-void bootstrap();
+bootstrap();
